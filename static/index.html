@@ -1,0 +1,95 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>TravelTrail</title>
+    <style>
+      body { font-family: system-ui, Arial, sans-serif; margin: 2rem; }
+      .card { padding: 1rem; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+      label { display:block; margin-top: 0.5rem; }
+      input { padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc; width: 100%; }
+      button { padding: 0.6rem 1rem; border: none; border-radius: 10px; cursor: pointer; margin-top: 1rem; }
+      table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+      th, td { border: 1px solid #eee; padding: 0.5rem; text-align: left; }
+      th { cursor: pointer; background: #fafafa; }
+    </style>
+  </head>
+  <body>
+    <h1>TravelTrail</h1>
+    <div class="card">
+      <h3>Search</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+        <div><label>From</label><input id="from" value="SFO"/></div>
+        <div><label>To</label><input id="to" value="LAX"/></div>
+        <div><label>Start</label><input id="start" value="2025-09-01"/></div>
+        <div><label>End</label><input id="end" value="2025-09-05"/></div>
+        <div><label>City</label><input id="city" value="Los Angeles"/></div>
+        <div><label>Check-in</label><input id="checkin" value="2025-09-01"/></div>
+        <div><label>Checkout</label><input id="checkout" value="2025-09-05"/></div>
+      </div>
+      <button onclick="search()">Get Recommendations</button>
+    </div>
+
+    <table id="results" style="display:none;">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Score</th>
+          <th onclick="sortTable(1)">Total Cost (USD)</th>
+          <th onclick="sortTable(2)">Total Time (min)</th>
+          <th>Flight</th>
+          <th>Hotel</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      async function search() {
+        const q = new URLSearchParams({
+          origin: document.getElementById('from').value,
+          destination: document.getElementById('to').value,
+          start: document.getElementById('start').value,
+          end: document.getElementById('end').value,
+          city: document.getElementById('city').value,
+          checkin: document.getElementById('checkin').value,
+          checkout: document.getElementById('checkout').value
+        });
+        const res = await fetch('/travel/recommendations?' + q.toString());
+        const data = await res.json();
+        const tbody = document.querySelector('#results tbody');
+        tbody.innerHTML = '';
+        data.forEach(r => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${r.score.toFixed(3)}</td>
+            <td>$${r.total_cost_usd.toFixed(2)}</td>
+            <td>${r.total_time_minutes}</td>
+            <td>${r.flight.airline} ${r.flight.origin}→${r.flight.destination} (${r.flight.depart_at} - ${r.flight.arrive_at})</td>
+            <td>${r.hotel.name} (${r.hotel.rating}/5)</td>
+          `;
+          tbody.appendChild(tr);
+        });
+        document.getElementById('results').style.display = data.length ? 'table' : 'none';
+      }
+
+      function sortTable(n) {
+        const table = document.getElementById("results");
+        const tbody = table.tBodies[0];
+        const rows = Array.from(tbody.rows);
+        const asc = table.getAttribute("data-sort-index") != n || table.getAttribute("data-sort-dir") == "desc";
+        rows.sort((a,b) => {
+          const va = parseFloat(a.cells[n].innerText.replace('$','')) || a.cells[n].innerText;
+          const vb = parseFloat(b.cells[n].innerText.replace('$','')) || b.cells[n].innerText;
+          if (va < vb) return asc ? -1 : 1;
+          if (va > vb) return asc ? 1 : -1;
+          return 0;
+        });
+        rows.forEach(r => tbody.appendChild(r));
+        table.setAttribute("data-sort-index", n);
+        table.setAttribute("data-sort-dir", asc ? "asc" : "desc");
+      }
+    </script>
+  </body>
+</html>

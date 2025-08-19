@@ -1,0 +1,42 @@
+[
+  {
+    "id": "H1",
+    "city": "Los Angeles",
+    "name": "LA Central Inn",
+    "checkin": "2025-09-01",
+    "checkout": "2025-09-05",
+    "nights": 4,
+    "price_usd": 420.0,
+    "rating": 4.2
+  },
+  {
+    "id": "H2",
+    "city": "Los Angeles",
+    "name": "Sunset Suites",
+    "checkin": "2025-09-01",
+    "checkout": "2025-09-05",
+    "nights": 4,
+    "price_usd": 360.0,
+    "rating": 3.8
+  },
+  {
+    "id": "H3",
+    "city": "Los Angeles",
+    "name": "Beachside Hotel",
+    "checkin": "2025-09-01",
+    "checkout": "2025-09-05",
+    "nights": 4,
+    "price_usd": 520.0,
+    "rating": 4.7
+  },
+  {
+    "id": "H4",
+    "city": "Seattle",
+    "name": "Emerald Stay",
+    "checkin": "2025-09-01",
+    "checkout": "2025-09-05",
+    "nights": 4,
+    "price_usd": 480.0,
+    "rating": 4.5
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "F1",
+    "origin": "SFO",
+    "destination": "LAX",
+    "depart_at": "2025-09-01T08:00:00",
+    "arrive_at": "2025-09-01T09:30:00",
+    "duration_minutes": 90,
+    "price_usd": 99.0,
+    "airline": "SkyAir"
+  },
+  {
+    "id": "F2",
+    "origin": "SFO",
+    "destination": "LAX",
+    "depart_at": "2025-09-01T12:00:00",
+    "arrive_at": "2025-09-01T13:40:00",
+    "duration_minutes": 100,
+    "price_usd": 120.0,
+    "airline": "StarJet"
+  },
+  {
+    "id": "F3",
+    "origin": "SFO",
+    "destination": "LAX",
+    "depart_at": "2025-09-01T18:00:00",
+    "arrive_at": "2025-09-01T19:20:00",
+    "duration_minutes": 80,
+    "price_usd": 150.0,
+    "airline": "Comet"
+  },
+  {
+    "id": "F4",
+    "origin": "SFO",
+    "destination": "SEA",
+    "depart_at": "2025-09-01T09:00:00",
+    "arrive_at": "2025-09-01T11:00:00",
+    "duration_minutes": 120,
+    "price_usd": 180.0,
+    "airline": "SkyAir"
+  }
+]
